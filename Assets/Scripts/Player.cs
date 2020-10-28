@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Player : Character
 {
+    [SerializeField]
+    private HealthBar healthBarPrefab;
+    HealthBar healthBar;
+    private void Start()
+    {
+        hitPoints.value = startHitPoints;
+        healthBar = Instantiate(healthBarPrefab);
+        healthBar.character = this;
+    }
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Pickable"))
@@ -12,26 +21,31 @@ public class Player : Character
             Item hitItem = collider.gameObject.GetComponent<Consumable>().item;
             if (hitItem != null)
             {
-                print($"hit {hitItem.name}");
+                bool shouldDisappear = false;
 
                 switch (hitItem.type)
                 {
                     case Item.ItemType.COIN:
+                        shouldDisappear = true;
                         break;
                     case Item.ItemType.HEALTH:
-                        AdjustHitPoints(hitItem.quantity);
+                        shouldDisappear = AdjustHitPoints(hitItem.quantity);
                         break;
                     default:
                         break;
                 }
-                collider.gameObject.SetActive(false);
+                if (shouldDisappear) collider.gameObject.SetActive(false);
             }
         }
     }
 
-    private void AdjustHitPoints(int quantity)
+    private bool AdjustHitPoints(int quantity)
     {
-        hitPoints += quantity;
-        print($"Adjusted by {quantity}. New value is {hitPoints}.");
+        if (hitPoints.value < maxHitPoints)
+        {
+            hitPoints.value += quantity;
+            return true;
+        }
+        return false;
     }
 }

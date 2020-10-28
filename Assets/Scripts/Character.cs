@@ -5,7 +5,9 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField]
-    protected int hitPoints;
+    protected HitPoint hitPoints;
+
+    public float maxHitPoints;
     [SerializeField]
-    protected int maxHitPoints;
+    protected float startHitPoints;
 }
