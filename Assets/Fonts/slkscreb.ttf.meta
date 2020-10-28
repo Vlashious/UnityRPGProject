@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: f78728ddd13cf814db018712d35b3793
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Silkscreen Expanded
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 510cefa7b66674f4b8f1f3e87ad79214, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
