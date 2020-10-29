@@ -6,12 +6,16 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
-    private HealthBar healthBarPrefab;
+    private HealthBar _healthBarPrefab;
     HealthBar healthBar;
+    [SerializeField]
+    private Inventory _invPrefab;
+    Inventory _inv;
     private void Start()
     {
+        _inv = Instantiate(_invPrefab);
         hitPoints.value = startHitPoints;
-        healthBar = Instantiate(healthBarPrefab);
+        healthBar = Instantiate(_healthBarPrefab);
         healthBar.character = this;
     }
     void OnTriggerEnter2D(Collider2D collider)
@@ -26,7 +30,7 @@ public class Player : Character
                 switch (hitItem.type)
                 {
                     case Item.ItemType.COIN:
-                        shouldDisappear = true;
+                        shouldDisappear = _inv.AddItem(hitItem);
                         break;
                     case Item.ItemType.HEALTH:
                         shouldDisappear = AdjustHitPoints(hitItem.quantity);

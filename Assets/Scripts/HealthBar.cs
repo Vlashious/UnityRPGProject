@@ -14,14 +14,14 @@ public class HealthBar : MonoBehaviour
     private float maxHitPoints;
     void Start()
     {
-        maxHitPoints = character.maxHitPoints;
+        // maxHitPoints = character.maxHitPoints;
     }
 
     void Update()
     {
         if (character != null)
         {
-            _meterImage.fillAmount = _hitPoint.value / maxHitPoints;
+            _meterImage.fillAmount = _hitPoint.value / character.maxHitPoints;
 
             _hpText.text = $"HP: {_meterImage.fillAmount * 100}";
         }
