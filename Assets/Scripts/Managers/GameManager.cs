@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public SpawnPoint playerSpawnPoint;
+    [SerializeField]
+    private CameraManager _cameraManager;
     void Awake()
     {
         Instance = this;
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
         if (playerSpawnPoint)
         {
             GameObject player = playerSpawnPoint.SpawnObject();
+            _cameraManager.vCam.Follow = player.transform;
         }
     }
 }
