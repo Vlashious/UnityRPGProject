@@ -6,17 +6,21 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField]
+    private HitPoint _hitPoints;
+    [SerializeField]
     private HealthBar _healthBarPrefab;
-    HealthBar healthBar;
+    HealthBar _healthBar;
     [SerializeField]
     private Inventory _invPrefab;
     Inventory _inv;
     private void Start()
     {
-        _inv = Instantiate(_invPrefab);
-        hitPoints.value = startHitPoints;
-        healthBar = Instantiate(_healthBarPrefab);
-        healthBar.character = this;
+        ResetCharacter();
+    }
+
+    private void OnEnabled()
+    {
+        ResetCharacter();
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -45,11 +49,45 @@ public class Player : Character
 
     private bool AdjustHitPoints(int quantity)
     {
-        if (hitPoints.value < maxHitPoints)
+        if (_hitPoints.value < maxHitPoints)
         {
-            hitPoints.value += quantity;
+            _hitPoints.value += quantity;
             return true;
         }
         return false;
+    }
+
+    public override void ResetCharacter()
+    {
+        _inv = Instantiate(_invPrefab);
+        _healthBar = Instantiate(_healthBarPrefab);
+        _healthBar.character = this;
+
+        _hitPoints.value = startHitPoints;
+    }
+
+    public override void KillCharacter()
+    {
+        base.KillCharacter();
+        Destroy(_healthBar);
+        Destroy(_inv);
+    }
+
+    public override IEnumerator DamageCharacter(int damage, float interval)
+    {
+        while (true)
+        {
+            _hitPoints.value -= damage;
+            if (_hitPoints.value <= float.Epsilon)
+            {
+                KillCharacter();
+                break;
+            }
+            if (interval > float.Epsilon)
+            {
+                yield return new WaitForSeconds(interval);
+            }
+            else break;
+        }
     }
 }
