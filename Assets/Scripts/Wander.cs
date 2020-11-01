@@ -33,8 +33,14 @@ public class Wander : MonoBehaviour
         _animator = GetComponent<Animator>();
         _currentSpeed = _wanderSpeed;
         _rb2d = GetComponent<Rigidbody2D>();
+        _endPos = transform.position;
 
         StartCoroutine(WanderRoutine());
+    }
+
+    void Update()
+    {
+        Debug.DrawLine(_rb2d.position, _endPos, Color.white);
     }
 
     private IEnumerator WanderRoutine()
@@ -55,14 +61,14 @@ public class Wander : MonoBehaviour
     private IEnumerator Move(Rigidbody2D rb2d, float currentSpeed)
     {
         var remainingDistance = (transform.position - _endPos).sqrMagnitude;
-        while(remainingDistance > float.Epsilon)
+        while (remainingDistance > float.Epsilon)
         {
-            if(_targetTransform)
+            if (_targetTransform)
             {
                 _endPos = _targetTransform.position;
             }
 
-            if(rb2d)
+            if (rb2d)
             {
                 _animator.SetBool("isWalking", true);
                 var newPos = Vector3.MoveTowards(rb2d.position, _endPos, currentSpeed * Time.deltaTime);
@@ -96,12 +102,27 @@ public class Wander : MonoBehaviour
         {
             _currentSpeed = _pursuitSpeed;
             _targetTransform = collider.gameObject.transform;
-            if(_moveCoroutine != null)
+            if (_moveCoroutine != null)
             {
                 StopCoroutine(_moveCoroutine);
             }
 
             _moveCoroutine = StartCoroutine(Move(_rb2d, _currentSpeed));
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            _animator.SetBool("isWalking", false);
+            _currentSpeed = _wanderSpeed;
+            if (_moveCoroutine != null)
+            {
+                StopCoroutine(_moveCoroutine);
+            }
+
+            _targetTransform = null;
         }
     }
 }

@@ -185,7 +185,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
 --- !u!114 &605565218233528936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pursuitSpeed: 1.4
-  _wanderSpeed: 2
+  _wanderSpeed: 0.8
   _directionChangeInterval: 3
   _followPlayer: 1
