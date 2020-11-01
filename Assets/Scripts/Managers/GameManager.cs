@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     {
         SetupScene();
     }
+    void Update()
+    {
+        if (Input.GetKey("escape")) Application.Quit();
+    }
 
     private void SetupScene()
     {
