@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHitPoints: 2
   startHitPoints: 2
-  _hitPoints: 1
+  _hitPoints: 2
   _damageStrength: 1
 --- !u!58 &5559341828482541587
 CircleCollider2D:

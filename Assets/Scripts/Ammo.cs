@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Ammo : MonoBehaviour
 {
-    [SerializeField]
-    int _damageDone;
+    public int damageDone;
 
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -13,7 +12,7 @@ public class Ammo : MonoBehaviour
         {
             var enemy = collider.gameObject.GetComponent<Enemy>();
 
-            StartCoroutine(enemy.DamageCharacter(_damageDone, 0));
+            StartCoroutine(enemy.DamageCharacter(damageDone, 0));
             gameObject.SetActive(false);
         }
     }

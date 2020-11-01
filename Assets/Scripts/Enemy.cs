@@ -19,6 +19,8 @@ public class Enemy : Character
     {
         while (true)
         {
+            print($"{damage}, {interval}");
+            StartCoroutine(Flicker());
             _hitPoints -= damage;
             if (_hitPoints <= float.Epsilon)
             {
@@ -43,12 +45,14 @@ public class Enemy : Character
         if (collision.gameObject.CompareTag("Player"))
         {
             var player = collision.gameObject.GetComponent<Player>();
-            print("heh");
             if (_damageCoroutine == null)
             {
                 _damageCoroutine = StartCoroutine(player.DamageCharacter(_damageStrength, 1f));
             }
+            return;
         }
+        var ammo = collision.gameObject.GetComponent<Ammo>();
+        StartCoroutine(DamageCharacter(ammo.damageDone, 0));
     }
 
     private void OnCollisionExit2D(Collision2D collision)
